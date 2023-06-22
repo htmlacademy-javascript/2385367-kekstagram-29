@@ -1,11 +1,11 @@
 import {getRandomInteger, createIdGenerator, getRandomArrayElement} from './util.js';
-import {getName, getComment, getDescription} from './mocks.js';
+import {getData} from './mocks.js';
 
-const randomName = getName().randomNames;
+const randomName = getData().randomNames;
 
-const commentMessage = getComment().commentMessages;
+const commentMessage = getData().commentMessages;
 
-const imageDescription = getDescription().imageDescriptions;
+const imageDescription = getData().imageDescriptions;
 
 const objectCount = 25;
 
