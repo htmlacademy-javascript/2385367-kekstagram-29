@@ -4,8 +4,8 @@ getStringLength ('I am happy', 10);
 const checkPalindrome = (string) => {
   let check = true;
   string = string.toUpperCase().replaceAll(' ', '');
-  for (let i = 0; i < string.length; i++) {
-    if (string.at(i) !== string.at(string.length - i - 1)) {
+  for (let i = 0; i < string.length / 2; i++) {
+    if (string[i] !== string[string.length - i - 1]) {
       check = false;
       break;
     }
