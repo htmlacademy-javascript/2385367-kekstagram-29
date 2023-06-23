@@ -22,3 +22,10 @@ function getNumber(string) {
   return parseInt(number, 10);
 }
 getNumber('Raw meat should be stored between -0,5°C and +2.6°C');
+
+const getTime = (workInit, workEnd, startMeeting, meetingDurations) => {
+  const timeToNumber = (time) => +time.split(':')[0] + time.split(':')[1] / 60;
+  return timeToNumber(workInit) <= timeToNumber(startMeeting) && timeToNumber(workEnd) - timeToNumber(startMeeting) >= meetingDurations / 60;
+};
+// eslint-disable-next-line no-console
+console.log(getTime('8:0', '10:0', '8:0', 120));// true
