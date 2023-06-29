@@ -1,5 +1,5 @@
 const getStringLength = (string, maxLength) => string.length <= maxLength;
-getStringLength ('I am happy', 10);
+getStringLength ('');
 
 const checkPalindrome = (string) => {
   let check = true;
@@ -12,7 +12,7 @@ const checkPalindrome = (string) => {
   }
   return check;
 };
-checkPalindrome('Murder fOR a jar oF red rum');
+checkPalindrome('');
 
 function getNumber(string) {
   let number = string.replace(/[^0-9]/g, '');
@@ -21,11 +21,10 @@ function getNumber(string) {
   }
   return parseInt(number, 10);
 }
-getNumber('Raw meat should be stored between -0,5°C and +2.6°C');
+getNumber('');
 
 const getTime = (workInit, workEnd, startMeeting, meetingDurations) => {
   const timeToNumber = (time) => +time.split(':')[0] + time.split(':')[1] / 60;
   return timeToNumber(workInit) <= timeToNumber(startMeeting) && timeToNumber(workEnd) - timeToNumber(startMeeting) >= meetingDurations / 60;
 };
-// eslint-disable-next-line no-console
-console.log(getTime('8:0', '10:0', '8:0', 120));// true
+getTime('', '', '', '');
