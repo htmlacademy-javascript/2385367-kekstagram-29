@@ -1,2 +1,3 @@
-import './data.js';
-import './thumbnails.js';
+import { cardsArray } from './cards-data.js';
+import { renderThumbnails } from './thumbnail.js';
+renderThumbnails(cardsArray());
