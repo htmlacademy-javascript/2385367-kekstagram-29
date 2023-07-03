@@ -1,7 +1,7 @@
 const thumbnailTemplate = document.querySelector('#picture').
   content.querySelector('.picture');
 
-const thumbnailsContainer = document.querySelector('.pictures');
+const container = document.querySelector('.pictures');
 
 const createRandomThumbnail = ({ url, description, likes, comments }) => {
   const randomThumbnail = thumbnailTemplate.cloneNode(true);
@@ -15,13 +15,14 @@ const createRandomThumbnail = ({ url, description, likes, comments }) => {
 };
 
 const renderThumbnails = (pictures) => {
-  const containerFragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
+
   pictures.forEach((picture) => {
     const thumbnail = createRandomThumbnail(picture);
-    containerFragment.append(thumbnail);
+    fragment.append(thumbnail);
   });
 
-  thumbnailsContainer.append(containerFragment);
+  container.append(fragment);
 };
 
 export { renderThumbnails };
