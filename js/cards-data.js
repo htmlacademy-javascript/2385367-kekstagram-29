@@ -7,8 +7,6 @@ const COPY_MESSAGES = getData().COMMENT_MESSAGES;
 
 const COPY_DESCRIPTIONS = getData().IMAGE_DESCRIPTIONS;
 
-const OBJECT_COUNT = 25;
-
 const generateCommentId = createIdGenerator ();
 const generateCardId = createRandomIdFromRangeGenerator(1, 25);
 
@@ -18,9 +16,6 @@ const createComment = () => ({
   message: getRandomArrayElement(COPY_MESSAGES),
   name: getRandomArrayElement(COPY_NAMES),
 });
-
-const similarComments = () => Array.from({length: OBJECT_COUNT}, createComment);
-similarComments();
 
 const createCommentCard = () => {
   const cardId = generateCardId();
@@ -35,6 +30,6 @@ const createCommentCard = () => {
   };
 };
 
-const cardsArray = () => Array.from({length: OBJECT_COUNT}, createCommentCard);
+const cardsArray = () => Array.from({length: 25}, createCommentCard);
 
 export { cardsArray };
