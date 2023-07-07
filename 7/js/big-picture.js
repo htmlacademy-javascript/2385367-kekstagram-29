@@ -44,7 +44,6 @@ const closeFullSizePicture = () => {
   fullSizePicture.classList.add('hidden');
   bodyTag.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  commentListItems.innerHTML = '';
 };
 
 function onDocumentKeydown(evt) {
