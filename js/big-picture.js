@@ -5,10 +5,6 @@ const commentCountItem = fullSizePicture.querySelector('.social__comment-count')
 const commentsLoaderButton = fullSizePicture.querySelector('.comments-loader');
 const pictureCancelButton = fullSizePicture.querySelector('.big-picture__cancel');
 const bodyTag = document.querySelector('body');
-const SLICE_OF_COMMENTS = 5;
-
-let commentsAppear = 0;
-let comments = [];
 
 const createComment = ({ avatar, name, message }) => {
   const comment = commentTemplate.cloneNode(true);
@@ -19,6 +15,11 @@ const createComment = ({ avatar, name, message }) => {
   return comment;
 };
 
+commentListItems.innerHTML = '';
+const SLICE_OF_COMMENTS = 5;
+let commentsAppear = 0;
+let comments = [];
+
 const renderComments = () => {
   commentsAppear += SLICE_OF_COMMENTS;
 
@@ -28,14 +29,14 @@ const renderComments = () => {
   } else {
     commentsLoaderButton.classList.remove('hidden');
   }
+  commentListItems.innerHTML = '';
+
   const fragmentList = document.createDocumentFragment();
-  for (let i = 0; i < commentsAppear; i++) {
+  for (let i = commentListItems.childElementCount; i < commentsAppear; i++) {
     const comment = createComment(comments[i]);
     fragmentList.append(comment);
   }
-  commentListItems.innerHTML = '';
   commentListItems.append(fragmentList);
-
   commentCountItem.innerHTML = `${ commentsAppear } из <span class="comments-count">${ comments.length }</span> комментариев</div>`;
 };
 
