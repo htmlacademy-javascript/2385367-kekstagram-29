@@ -15,35 +15,61 @@ const createComment = ({ avatar, name, message }) => {
   return comment;
 };
 
-const renderComments = (elements) => {
+commentListItems.innerHTML = '';
+const SLICE_OF_COMMENTS = 5;
+let commentsAppear = 0;
+let comments = [];
+
+const renderComments = () => {
+  commentsAppear += SLICE_OF_COMMENTS;
+
+  if (commentsAppear >= comments.length) {
+    commentsLoaderButton.classList.add('hidden');
+    commentsAppear = comments.length;
+  } else {
+    commentsLoaderButton.classList.remove('hidden');
+  }
+  commentListItems.innerHTML = '';
+
   const fragmentList = document.createDocumentFragment();
-  elements.forEach((element) => fragmentList.append(createComment(element)));
+  for (let i = commentListItems.childElementCount; i < commentsAppear; i++) {
+    const comment = createComment(comments[i]);
+    fragmentList.append(comment);
+  }
   commentListItems.append(fragmentList);
+  commentCountItem.innerHTML = `${ commentsAppear } из <span class="comments-count">${ comments.length }</span> комментариев</div>`;
 };
 
-const renderFullSizePictureDetails = ({ url, description, likes, comments }) => {
+commentsLoaderButton.addEventListener('click', renderComments);
+
+const renderFullSizePictureDetails = ({ url, description, likes }) => {
   fullSizePicture.querySelector('.big-picture__img img').src = url;
   fullSizePicture.querySelector('.big-picture__img img').alt = description;
   fullSizePicture.querySelector('.social__caption').textContent = description;
   fullSizePicture.querySelector('.likes-count').textContent = likes;
-  fullSizePicture.querySelector('.comments-count').textContent = comments.length;
 };
 
 const openFullSizePicture = (data) => {
   fullSizePicture.classList.remove('hidden');
   bodyTag.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  commentCountItem.classList.add('hidden');
-  commentsLoaderButton.classList.add('hidden');
-  commentListItems.innerHTML = '';
+
   renderFullSizePictureDetails(data);
-  renderComments(data.comments);
+  comments = data.comments;
+  if (comments.length > 0){
+    renderComments();
+  } else {
+    commentCountItem.innerHTML = `${ commentsAppear } комментариев</div>`;
+    commentListItems.innerHTML = '';
+    commentsLoaderButton.classList.add('hidden');
+  }
 };
 
 const closeFullSizePicture = () => {
   fullSizePicture.classList.add('hidden');
   bodyTag.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  commentsAppear = 0;
 };
 
 function onDocumentKeydown(evt) {
