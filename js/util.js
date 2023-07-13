@@ -30,3 +30,5 @@ export const createIdGenerator = () => {
   };
 };
 export const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+
+export const getCharacters = (string) => string.toLowerCase().split(' ').filter(Boolean);
