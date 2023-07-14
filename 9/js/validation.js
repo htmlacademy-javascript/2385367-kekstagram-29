@@ -1,11 +1,7 @@
-import { getCharacters } from './util.js';
-
 const pictureLoadingForm = document.querySelector('.img-upload__form');
 const hashTagType = pictureLoadingForm.querySelector('.text__hashtags');
 const commentType = pictureLoadingForm.querySelector('.text__description');
 const publishButton = pictureLoadingForm.querySelector('.img-upload__submit');
-
-const hashTagSpecimen = /^#[a-za-яё0-9]{1,19}$/i;
 
 const defaultConfig = {
   classTo: 'img-upload__field-wrapper',
@@ -24,12 +20,13 @@ pictureLoadingForm.addEventListener('input', () => {
 
 });
 
+const hashTagTypeString = () => hashTagType.value.trim().split(' ').filter(Boolean);
 
-const hashTagCountValidate = () => getCharacters(hashTagType.value).length <= 5;
+const hashTagCountValidate = () => hashTagTypeString().length <= 5;
 
-const hashTagSpecimenValidate = () => getCharacters(hashTagType.value).every((element) => hashTagSpecimen.test(element));
+const hashTagSpecimenValidate = () => hashTagTypeString().every((element) => /^#[a-za-яё0-9]{1,19}$/i.test(element));
 
-const hashTagRepeatingValidate = () => getCharacters(hashTagType.value).every((element) => getCharacters(hashTagType.value).indexOf(element) === getCharacters(hashTagType.value).lastIndexOf(element));
+const hashTagRepeatingValidate = () => hashTagTypeString().every((element) => hashTagTypeString().indexOf(element) === hashTagTypeString().lastIndexOf(element));
 
 const commentValidate = () => commentType.value.length <= 140;
 
