@@ -1,3 +1,5 @@
+import { getArrayCharacter } from './util.js';
+
 const pictureLoadingForm = document.querySelector('.img-upload__form');
 const hashTagType = pictureLoadingForm.querySelector('.text__hashtags');
 const commentType = pictureLoadingForm.querySelector('.text__description');
@@ -14,29 +16,23 @@ const defaultConfig = {
 
 const formValidator = new Pristine(pictureLoadingForm, defaultConfig);
 
-pictureLoadingForm.addEventListener('input', () => {
+pictureLoadingForm.addEventListener('input', () => publishButton.toggleAttribute('disabled', !formValidator.validate()));
 
-  publishButton.toggleAttribute('disabled', !formValidator.validate());
+const MAX_HASHTAG_COUNT = 5;
+const MAX_COMMENT_CHARACTERS = 140;
+const HASTAG_SPECIMEN = /^#[a-za-яё0-9]{1,19}$/i;
 
-});
+const hashTagCountValidate = () => getArrayCharacter(hashTagType.value).length <= MAX_HASHTAG_COUNT;
 
-const hashTagTypeString = () => hashTagType.value.trim().split(' ').filter(Boolean);
+const hashTagSpecimenValidate = () => getArrayCharacter(hashTagType.value).every((element) => HASTAG_SPECIMEN.test(element));
 
-const hashTagCountValidate = () => hashTagTypeString().length <= 5;
+const hashTagRepeatingValidate = () => getArrayCharacter(hashTagType.value).every((element) => getArrayCharacter(hashTagType.value).indexOf(element) === getArrayCharacter(hashTagType.value).lastIndexOf(element));
 
-const hashTagSpecimenValidate = () => hashTagTypeString().every((element) => /^#[a-za-яё0-9]{1,19}$/i.test(element));
-
-const hashTagRepeatingValidate = () => hashTagTypeString().every((element) => hashTagTypeString().indexOf(element) === hashTagTypeString().lastIndexOf(element));
-
-const commentValidate = () => commentType.value.length <= 140;
+const commentValidate = () => commentType.value.length <= MAX_COMMENT_CHARACTERS;
 
 formValidator.addValidator(hashTagType, hashTagCountValidate, 'Хеш-тегов должно быть не более 5', 1, true);
 formValidator.addValidator(hashTagType, hashTagSpecimenValidate, 'Bведенный хэш-тег написан с ошибкой', 1, true);
 formValidator.addValidator(hashTagType, hashTagRepeatingValidate, 'Вы написали повторяющийся хэш-тег', 1, true);
 formValidator.addValidator(commentType, commentValidate, 'Вы ввели слишком длинный комментарий!', 1, true);
 
-pictureLoadingForm.addEventListener('reset', () => {
-
-  formValidator.reset();
-
-});
+export { formValidator };
