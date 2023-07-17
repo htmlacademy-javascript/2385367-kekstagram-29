@@ -32,3 +32,5 @@ export const createIdGenerator = () => {
 export const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 export const getArrayCharacter = (string) => string.toLowerCase().split(' ').filter(Boolean);
+
+export const getNumber = (string) => parseInt(string.replace(/[^0-9]/g, ''), 10);

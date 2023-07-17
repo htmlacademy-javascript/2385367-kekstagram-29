@@ -1,3 +1,5 @@
+import { getNumber } from "./util.js";
+
 const pictureLoadingForm = document.querySelector('.img-upload__form');
 const picturePreview = pictureLoadingForm.querySelector('.img-upload__preview img');
 const scaleInput = pictureLoadingForm.querySelector('.scale__control--value');
@@ -8,8 +10,6 @@ const INIT_SCALE = 100;
 const MAX_SCALE = 100;
 const MIN_SCALE = 25;
 const STEP_SCALE = 25;
-
-const getNumber = (string) => parseInt(string.replace(/[^0-9]/g, ''), 10);
 
 let currentScale = getNumber(scaleInput.getAttribute('value'));
 
