@@ -1,4 +1,4 @@
-import { getNumber } from "./util.js";
+import { getNumber } from './util.js';
 
 const pictureLoadingForm = document.querySelector('.img-upload__form');
 const picturePreview = pictureLoadingForm.querySelector('.img-upload__preview img');
