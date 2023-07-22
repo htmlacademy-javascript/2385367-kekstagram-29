@@ -47,7 +47,7 @@ const togglePublishButton = (isDisabled) => {
   publishButton.textContent = isDisabled ? publishButtonText.PUBLISHING : publishButtonText.INACTIVE;
 };
 
-const uploadFormSubmit = (cb) => {
+const uploadFormOnSubmit = (cb) => {
   pictureLoadingForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const isValid = formValidator.validate();
@@ -60,4 +60,4 @@ const uploadFormSubmit = (cb) => {
   });
 };
 
-export { uploadFormSubmit, close };
+export { uploadFormOnSubmit, close };
