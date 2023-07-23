@@ -4,9 +4,17 @@ const errorMessage = document.querySelector('#error')
   .content.querySelector('.error');
 const body = document.querySelector('body');
 
-const concealMessage = () => {
-  const messageDomElement = body.querySelector('.success') || body.querySelector('.error');
-  messageDomElement.remove();
+const hideMessage = () => {
+  const messageDomElement = body.querySelectorAll('section');
+
+  for (let i = 0; i < messageDomElement.length; i++) {
+    const item = messageDomElement[i];
+    if (item.classList.contains('success')) {
+      item.remove();
+    } else if (item.classList.contains('error')) {
+      item.remove();
+    }
+  }
   body.removeEventListener('click', onBodyClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 };
@@ -14,7 +22,7 @@ const concealMessage = () => {
 function onDocumentKeydown(evt) {
   if(evt.key === 'Escape') {
     evt.preventDefault();
-    concealMessage();
+    hideMessage();
   }
 }
 
@@ -25,14 +33,14 @@ function onBodyClick(evt) {
   ) {
     return;
   }
-  concealMessage();
+  hideMessage();
 }
 
 const exposeMessage = (messageElement, closeButtonClass) => {
   body.append(messageElement);
   document.addEventListener('click', onBodyClick);
   document.addEventListener('keydown', onDocumentKeydown);
-  messageElement.querySelector(closeButtonClass).addEventListener('click', concealMessage);
+  messageElement.querySelector(closeButtonClass).addEventListener('click', hideMessage);
 };
 
 const exposeSuccessMessage = () => {
@@ -44,4 +52,3 @@ const exposeErrorMessage = () => {
 };
 
 export { exposeSuccessMessage, exposeErrorMessage };
-
