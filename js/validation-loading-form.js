@@ -5,46 +5,61 @@ import { resetScale } from './picture-scale.js';
 const pictureLoadingForm = document.querySelector('.img-upload__form');
 const upLoadButton = pictureLoadingForm.querySelector('.img-upload__input');
 const popupLoading = pictureLoadingForm.querySelector('.img-upload__overlay');
+const publishButton = pictureLoadingForm.querySelector('.img-upload__submit');
+const cancelButton = pictureLoadingForm.querySelector('.img-upload__cancel');
 
-const open = (form) => {
-  form.classList.remove('hidden');
-  form.addEventListener('click', onFormCancelButtonClick);
+const open = () => {
+  popupLoading.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onFormKeydown);
 };
 
-upLoadButton.addEventListener('change', () => open(popupLoading));
+upLoadButton.addEventListener('change', open);
 
-const close = (form) => {
-  form.classList.add('hidden');
-  form.removeEventListener('click', onFormCancelButtonClick);
+const close = () => {
+  popupLoading.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onFormKeydown);
-};
-
-function onFormCancelButtonClick (evt) {
-  if (evt.target.closest('.cancel')) {
-    close(evt.currentTarget);
-  }
-}
-
-const isTextInFormFocused = (item) => (item.tagName === 'INPUT' && item.getAttribute('type') === 'text') || item.tagName === 'TEXTAREA';
-
-function onFormKeydown (evt) {
-  if (evt.key === 'Escape' && !isTextInFormFocused(document.activeElement)) {
-    document.querySelector('.img-upload__overlay:not(.hidden)').dispatchEvent(new Event('popup::hide'));
-    close(document.querySelector('.img-upload__overlay:not(.hidden)'));
-  }
-}
-
-pictureLoadingForm.addEventListener('reset', () => {
-
   formValidator.reset();
   resetScale();
   resetEffect();
-
-});
-
-pictureLoadingForm.addEventListener('popup::hide', () => {
   pictureLoadingForm.reset();
-}, true);
+};
+
+cancelButton.addEventListener('click', close);
+
+const isTextInFormFocused = (item) => (item.tagName === 'INPUT' && item.getAttribute('type') === 'text') || item.tagName === 'TEXTAREA';
+
+const isErrorMessageAppear = () => Boolean(document.querySelector('.error'));
+
+function onFormKeydown (evt) {
+  if (evt.key === 'Escape' && !isTextInFormFocused(document.activeElement) && !isErrorMessageAppear()) {
+    evt.preventDefault();
+    close();
+  }
+}
+
+const publishButtonText = {
+  INACTIVE: 'Опубликовать',
+  PUBLISHING: 'Oтправляет...',
+};
+
+const togglePublishButton = (isDisabled) => {
+  publishButton.disabled = isDisabled;
+  publishButton.textContent = isDisabled ? publishButtonText.PUBLISHING : publishButtonText.INACTIVE;
+};
+
+const uploadFormOnSubmit = (cb) => {
+  pictureLoadingForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = formValidator.validate();
+
+    if (isValid) {
+      togglePublishButton(true);
+      await cb(new FormData (pictureLoadingForm));
+      togglePublishButton();
+    }
+  });
+};
+
+export { uploadFormOnSubmit, close };

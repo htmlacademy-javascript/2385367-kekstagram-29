@@ -1,36 +1,24 @@
-export const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-};
-
-export const createRandomIdFromRangeGenerator = (min, max) => {
-  const previousValues = [];
-
-  return () => {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
-
-export const createIdGenerator = () => {
-  let lastGeneratedId = 0;
-  return function () {
-    lastGeneratedId += 1;
-    return lastGeneratedId;
-  };
-};
-export const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
 export const getArrayCharacter = (string) => string.toLowerCase().split(' ').filter(Boolean);
 
 export const getNumber = (string) => parseInt(string.replace(/[^0-9]/g, ''), 10);
+
+const TIME_BANNER_APPEAR = 5000;
+
+export const showBanner = (message) => {
+  const banner = document.createElement('div');
+  banner.style.position = 'absolute';
+  banner.style.zIndex = '100';
+  banner.style.left = '0';
+  banner.style.top = '0';
+  banner.style.right = '0';
+  banner.style.padding = '10px 3px';
+  banner.style.fontSize = '20px';
+  banner.style.textAlign = 'center';
+  banner.style.backgroundColor = 'red';
+  banner.textContent = message;
+  document.body.append(banner);
+
+  setTimeout(() => {
+    banner.remove();
+  }, TIME_BANNER_APPEAR);
+};
