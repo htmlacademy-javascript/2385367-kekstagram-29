@@ -30,9 +30,11 @@ cancelButton.addEventListener('click', close);
 
 const isTextInFormFocused = (item) => (item.tagName === 'INPUT' && item.getAttribute('type') === 'text') || item.tagName === 'TEXTAREA';
 
+const isErrorMessageAppear = () => Boolean(document.querySelector('.error'));
+
 function onFormKeydown (evt) {
-  if (evt.key === 'Escape' && !isTextInFormFocused(document.activeElement)) {
-    document.querySelector('.img-upload__overlay:not(.hidden)').dispatchEvent(new Event('popup::hide'));
+  if (evt.key === 'Escape' && !isTextInFormFocused(document.activeElement) && !isErrorMessageAppear()) {
+    evt.preventDefault();
     close();
   }
 }
