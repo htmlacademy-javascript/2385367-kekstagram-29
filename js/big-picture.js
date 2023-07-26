@@ -37,7 +37,7 @@ const renderComments = () => {
     fragmentList.append(comment);
   }
   commentListItems.append(fragmentList);
-  commentCountItem.innerHTML = `${ commentsAppear } из <span class="comments-count">${ comments.length }</span> комментариев</div>`;
+  commentCountItem.innerHTML = `<span class="comments-slice">${ commentsAppear }</span> из <span class="comments-count">${ comments.length }</span> комментариев</div>`;
 };
 
 commentsLoaderButton.addEventListener('click', renderComments);

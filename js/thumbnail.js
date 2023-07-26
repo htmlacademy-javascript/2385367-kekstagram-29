@@ -12,11 +12,10 @@ const createRandomThumbnail = ({ url, description, likes, comments, id }) => {
   return randomThumbnail;
 };
 
-const renderThumbnails = (elements) => {
+const renderThumbnails = (elements, container) => {
+  container.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
   elements.forEach((element) => fragment.append(createRandomThumbnail(element)));
-
-  const container = document.querySelector('.pictures');
   container.append(fragment);
 };
 
