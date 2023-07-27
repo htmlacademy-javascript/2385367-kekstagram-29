@@ -22,3 +22,11 @@ export const showBanner = (message) => {
     banner.remove();
   }, TIME_BANNER_APPEAR);
 };
+
+export const debounce = (cb, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => cb.apply(this, rest), timeoutDelay);
+  };
+};
