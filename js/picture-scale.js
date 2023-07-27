@@ -1,15 +1,15 @@
 import { getNumber } from './util.js';
 
+const INIT_SCALE = 100;
+const MAX_SCALE = 100;
+const MIN_SCALE = 25;
+const STEP_SCALE = 25;
+
 const pictureLoadingForm = document.querySelector('.img-upload__form');
 const picturePreview = pictureLoadingForm.querySelector('.img-upload__preview img');
 const scaleInput = pictureLoadingForm.querySelector('.scale__control--value');
 const scaleSmaller = pictureLoadingForm.querySelector('.scale__control--smaller');
 const scaleBigger = pictureLoadingForm.querySelector('.scale__control--bigger');
-
-const INIT_SCALE = 100;
-const MAX_SCALE = 100;
-const MIN_SCALE = 25;
-const STEP_SCALE = 25;
 
 let currentScale = getNumber(scaleInput.getAttribute('value'));
 

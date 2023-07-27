@@ -1,5 +1,9 @@
 import { getArrayCharacter } from './util.js';
 
+const MAX_HASHTAG_COUNT = 5;
+const MAX_COMMENT_CHARACTERS = 140;
+const HASTAG_SPECIMEN = /^#[a-za-яё0-9]{1,19}$/i;
+
 const pictureLoadingForm = document.querySelector('.img-upload__form');
 const hashTagType = pictureLoadingForm.querySelector('.text__hashtags');
 const commentType = pictureLoadingForm.querySelector('.text__description');
@@ -17,10 +21,6 @@ const defaultConfig = {
 const formValidator = new Pristine(pictureLoadingForm, defaultConfig);
 
 pictureLoadingForm.addEventListener('input', () => publishButton.toggleAttribute('disabled', !formValidator.validate()));
-
-const MAX_HASHTAG_COUNT = 5;
-const MAX_COMMENT_CHARACTERS = 140;
-const HASTAG_SPECIMEN = /^#[a-za-яё0-9]{1,19}$/i;
 
 const hashTagCountValidate = () => getArrayCharacter(hashTagType.value).length <= MAX_HASHTAG_COUNT;
 

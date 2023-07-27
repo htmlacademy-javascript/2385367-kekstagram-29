@@ -2,6 +2,8 @@ const fullSizePicture = document.querySelector('.big-picture');
 const commentTemplate = fullSizePicture.querySelector('.social__comment');
 const commentListItems = fullSizePicture.querySelector('.social__comments');
 const commentCountItem = fullSizePicture.querySelector('.social__comment-count');
+const commentsSlice = fullSizePicture.querySelector('.comments-slice');
+const commentsCount = fullSizePicture.querySelector('.comments-count');
 const commentsLoaderButton = fullSizePicture.querySelector('.comments-loader');
 const pictureCancelButton = fullSizePicture.querySelector('.big-picture__cancel');
 const bodyTag = document.querySelector('body');
@@ -37,7 +39,8 @@ const renderComments = () => {
     fragmentList.append(comment);
   }
   commentListItems.append(fragmentList);
-  commentCountItem.innerHTML = `<span class="comments-slice">${ commentsAppear }</span> из <span class="comments-count">${ comments.length }</span> комментариев</div>`;
+  commentsSlice.textContent = `${ commentsAppear }`;
+  commentsCount.textContent = `${ comments.length }`;
 };
 
 commentsLoaderButton.addEventListener('click', renderComments);
@@ -59,7 +62,8 @@ const openFullSizePicture = (data) => {
   if (comments.length > 0){
     renderComments();
   } else {
-    commentCountItem.innerHTML = `${ commentsAppear } комментариев</div>`;
+    commentCountItem.innerHTML = '';
+    commentCountItem.textContent = `${ commentsAppear } комментариев`;
     commentListItems.innerHTML = '';
     commentsLoaderButton.classList.add('hidden');
   }
