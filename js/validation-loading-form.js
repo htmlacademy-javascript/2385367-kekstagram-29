@@ -2,11 +2,20 @@ import { formValidator } from './input-validation.js';
 import { resetEffect } from './set-picture-effects.js';
 import { resetScale } from './picture-scale.js';
 
+const FYLE_TYPES = ['jpg', 'jpeg', 'png'];
+
+const PublishButtonText = {
+  INACTIVE: 'Опубликовать',
+  PUBLISHING: 'Oтправляет...',
+};
+
 const pictureLoadingForm = document.querySelector('.img-upload__form');
 const upLoadButton = pictureLoadingForm.querySelector('.img-upload__input');
 const popupLoading = pictureLoadingForm.querySelector('.img-upload__overlay');
 const publishButton = pictureLoadingForm.querySelector('.img-upload__submit');
 const cancelButton = pictureLoadingForm.querySelector('.img-upload__cancel');
+const upLoadPicturePreview = pictureLoadingForm.querySelector('.img-upload__preview img');
+const pictureEffectsPreview = pictureLoadingForm.querySelectorAll('.effects__preview');
 
 const open = () => {
   popupLoading.classList.remove('hidden');
@@ -14,7 +23,23 @@ const open = () => {
   document.addEventListener('keydown', onFormKeydown);
 };
 
-upLoadButton.addEventListener('change', open);
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FYLE_TYPES.some((it) => fileName.endsWith(it));
+};
+
+const onFileInputChange = () => {
+  const file = upLoadButton.files[0];
+  if (file && isValidType(file)) {
+    upLoadPicturePreview.src = URL.createObjectURL(file);
+    pictureEffectsPreview.forEach((preview) => {
+      preview.style.backgroundImage = `url('${upLoadPicturePreview.src}')`;
+    });
+  }
+  open();
+};
+
+upLoadButton.addEventListener('change', onFileInputChange);
 
 const close = () => {
   popupLoading.classList.add('hidden');
@@ -39,14 +64,9 @@ function onFormKeydown (evt) {
   }
 }
 
-const publishButtonText = {
-  INACTIVE: 'Опубликовать',
-  PUBLISHING: 'Oтправляет...',
-};
-
 const togglePublishButton = (isDisabled) => {
   publishButton.disabled = isDisabled;
-  publishButton.textContent = isDisabled ? publishButtonText.PUBLISHING : publishButtonText.INACTIVE;
+  publishButton.textContent = isDisabled ? PublishButtonText.PUBLISHING : PublishButtonText.INACTIVE;
 };
 
 const uploadFormOnSubmit = (cb) => {
