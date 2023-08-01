@@ -35,11 +35,11 @@ const setEffect = (effect) => {
       }}
   });
   picturePreview.style.filter = effectSlider.noUiSlider.get();
-  effectSetLevel.value = effectSlider.noUiSlider.get(true);
+  effectSetLevel.value = (effectSlider.noUiSlider.get(true)).toFixed(2);
 };
 
 const changeEffectLevel = () => {
-  const level = effectSlider.noUiSlider.get(true);
+  const level = (effectSlider.noUiSlider.get(true)).toFixed(2);
   effectSetLevel.value = level;
 
   picturePreview.style.filter = effectSlider.noUiSlider.get();
